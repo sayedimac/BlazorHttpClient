@@ -1,0 +1,18 @@
+POST https://alwayson.search.windows.net/datasources?api-version=2023-11-01
+ Content-Type: application/json
+ api-key: 9mqjeGidy1kZn0kXWu1LqCW2sb61mfgfXYuSxZqM9GAzSeAgIUdh
+
+ {
+     "name" : "azuresqldatasource",
+     "description" : "A database for testing Azure AI Search indexes.",
+     "type" : "azuresql",
+     "credentials" : { "connectionString" : "Server=tcp:alwayson.database.windows.net,1433;Database=alwayson;User ID=johan;Password=AvePoint12!\";Trusted_Connection=False;Encrypt=True;Connection Timeout=30" },
+     "container" : { 
+         "name" : "Product",
+         "query" : null
+         },
+     "dataChangeDetectionPolicy": null,
+     "dataDeletionDetectionPolicy": null,
+     "encryptionKey": null,
+     "identity": null
+ }

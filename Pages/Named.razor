@@ -1,0 +1,50 @@
+﻿@page "/named"
+@using azureSamples.Models
+@using azureSamples.Services
+@* Injecting the Scoped client *@
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Named HttpClient</PageTitle>
+
+<h1>Typed Client</h1>
+<p>Multiple Named HttpClients can be added to the project for accessing multiple endpoints in the application</p>
+<p>Perfect for making calls to a <u>multiple backend APIs</u>in your application.</p>
+<TNamed />
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var Http = ClientFactory.CreateClient("WeatherForecastAPI");
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("api/getweather");
+    }
+}
